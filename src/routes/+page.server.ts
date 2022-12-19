@@ -20,13 +20,22 @@ export const actions: Actions = {
 				response_format: 'url'
 			})
 		});
+
 		const responseData = await response.json();
 
-		return {
-			success: true,
-			data: {
-				images: responseData
-			}
-		};
+		if (response.ok) {
+			return {
+				success: true,
+				data: {
+					keyword: imageDesc?.toString(),
+					images: responseData
+				}
+			};
+		} else {
+			return {
+				success: false,
+				error: responseData?.error?.message
+			};
+		}
 	}
 };
